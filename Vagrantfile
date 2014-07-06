@@ -10,16 +10,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
- # config.vb.customize ["modifyvm", :id, "--memory", '2048']
+  # config.vb.customize ["modifyvm", :id, "--memory", '2048']
   config.vm.box = "centos64-dev"
-  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
+  #config.vm.box = "precise64"
+  #config.vm.provision "shell", inline: "apt-get update"
+  #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  #config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
   config.berkshelf.enabled = true
 
   config.vm.hostname = "observium-berkshelf"
 
 
   # Set the version of chef to install using the vagrant-omnibus plugin
- # config.omnibus.chef_version = :latest
+  config.omnibus.chef_version = :latest
 
   # Every Vagrant virtual environment requires a box to build off of.
   #config.vm.box = "opscode_ubuntu-12.04_provisionerless"

@@ -2,7 +2,7 @@ name             'observium'
 maintainer       'Petar Koraca'
 maintainer_email 'pkoraca@gmail.om'
 license          'Apache'
-description      'Installs/Configures observium'
+description      'Installs/Configures Observium'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.0'
 
