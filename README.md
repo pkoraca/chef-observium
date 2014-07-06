@@ -5,6 +5,7 @@ Observium cookbook installs [_Observium_](http://www.observium.org) network moni
 ## Supported Platforms
 
 - CentOS 6
+- Ubuntu 12.04
 
 ## Usage
 
