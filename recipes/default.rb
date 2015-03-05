@@ -149,6 +149,6 @@ end
 
 cron_d 'poller-wrapper' do
   minute '*/5'
-  command "#{node['observium']['install_dir']}/poller-wrapper.py 1 >> /dev/null 2>&1"
+  command "#{node['observium']['install_dir']}/poller-wrapper.py #{node['observium']['config']['poller_threads']} >> /dev/null 2>&1"
   user 'root'
 end

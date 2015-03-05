@@ -26,6 +26,7 @@ default['observium']['device_status']['uptime'] = true
 
 default['observium']['config']['fping_path'] = '/usr/bin/fping'
 default['observium']['config']['collectd_dir'] = '/var/lib/collectd/rrd/'
+default['observium']['config']['poller_threads'] = '8'
 
 default['observium']['db']['host'] = 'localhost'
 default['observium']['db']['user'] = 'observium'
