@@ -18,36 +18,48 @@ end
 # require mysql fails due to https://sethvargo.com/using-gems-with-chef/
 
 # Run first because of dependencies for mysql gem
-if platform?("ubuntu", "debian")
-  %w{build-essential libmysqlclient-dev libapache2-mod-php5 php5-cli php5-mysql php5-gd php5-snmp php-pear snmp graphviz php5-mcrypt php5-json subversion mysql-client rrdtool fping imagemagick whois mtr-tiny nmap ipmitool python-mysqldb}.each do |p|
+if platform?('ubuntu', 'debian')
+  %w(build-essential libmysqlclient-dev libapache2-mod-php5 php5-cli php5-mysql
+     php5-gd php5-snmp php-pear snmp graphviz php5-mcrypt php5-json
+     subversion mysql-client rrdtool fping imagemagick whois mtr-tiny nmap
+     ipmitool python-mysqldb).each do |p|
     package p do
-      action :nothing
-    end.run_action(:install)
-end
-
+      action :install
+    end
+  end
+  package ['sendmail', 'sendmail-bin'] do
+    action :install if node['observium']['alert']['email_enable'] == true
+  end
 else
-  %w{wget ruby-devel gcc rubygems php mysql mysql-devel php-mysql php-gd php-snmp php-pear net-snmp net-snmp-utils graphviz subversion rrdtool ImageMagick jwhois nmap ipmitool MySQL-python}.each do |p|
+  %w(wget ruby-devel gcc rubygems php mysql mysql-devel php-mysql php-gd
+     php-snmp php-pear net-snmp net-snmp-utils graphviz subversion rrdtool
+     ImageMagick jwhois nmap ipmitool MySQL-python).each do |p|
     package p do
-      action :nothing
-    end.run_action(:install)
+      action :install
+    end
+  end
+  package ['sendmail'] do
+    action :install if node['observium']['alert']['email_enable'] == true
   end
 end
 
-r = chef_gem "mysql2" do
-  action :nothing
+chef_gem 'mysql2' do
+  compile_time false
+  action :install
 end
-r.run_action(:install)
 
 Gem.clear_paths
 
 if platform?('centos', 'redhat')
- # since include_recipe yum-epel runs later than .run_action()
-  %w{php-mcrypt fping collectd-rrdtool}.each do |pkg|
+  # since include_recipe yum-epel runs later than .run_action()
+  %w(php-mcrypt fping collectd-rrdtool).each do |pkg|
     package pkg
   end
 end
 
-# Ruby code in the ruby_block resource is evaluated with other resources during convergence, whereas Ruby code outside of a ruby_block resource is evaluated before other resources, as the recipe is compiled.
+# Ruby code in the ruby_block resource is evaluated with other resources during
+# convergence, whereas Ruby code outside of a ruby_block resource is evaluated
+# before other resources, as the recipe is compiled.
 mysql_database_user node['observium']['db']['user'] do
   connection(
     host: node['observium']['db']['host'],
@@ -137,18 +149,22 @@ end
 cron_d 'discovery-all' do
   minute '33'
   hour '*/6'
-  command "#{node['observium']['install_dir']}/discovery.php -h all >> /dev/null 2>&1"
+  command "#{node['observium']['install_dir']}/discovery.php -h all >> /dev/nul
+                   2>&1"
   user 'root'
 end
 
 cron_d 'discovery-new' do
   minute '*/5'
-  command "#{node['observium']['install_dir']}/discovery.php -h new >> /dev/null 2>&1"
+  command "#{node['observium']['install_dir']}/discovery.php -h new >> /dev/null
+                   2>&1"
   user 'root'
 end
 
 cron_d 'poller-wrapper' do
   minute '*/5'
-  command "#{node['observium']['install_dir']}/poller-wrapper.py #{node['observium']['config']['poller_threads']} >> /dev/null 2>&1"
+  command "#{node['observium']['install_dir']}/poller-wrapper.py #
+                   {node['observium']['config']['poller_threads']} >> /dev/null
+                   2>&1"
   user 'root'
 end
