@@ -6,7 +6,7 @@ description 'Installs/Configures Observium'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.1.2'
 
-%w(apt ark cron apache2 mysql yum yum-epel yum-repoforge database).each do |pkg|
+%w(yum yum-epel yum-repoforge ark cron apache2 mysql database).each do |pkg|
   depends pkg
 end
 
