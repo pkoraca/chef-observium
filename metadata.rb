@@ -10,6 +10,6 @@ version '0.1.2'
   depends pkg
 end
 
-%w(redhat centos ubuntu).each do |os|
+%w(redhat centos ubuntu debian).each do |os|
   supports os
 end
