@@ -7,7 +7,12 @@ when 'debian', 'ubuntu'
   default['apache']['user'] = 'www-data'
   default['apache']['group'] = 'www-data'
 when 'centos', 'redhat'
-  default['mysql']['version'] = '5.1'
+  case node[:platform_version]
+  when '<= 6'
+    default['mysql']['version'] = '5.1'
+  when '>= 7'
+    default['mysql']['version'] = '5.5'
+  end
   default['apache']['user'] = 'apache'
   default['apache']['group'] = 'apache'
 end
