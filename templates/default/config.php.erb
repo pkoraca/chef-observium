@@ -35,9 +35,9 @@ $config['poller-wrapper']['alerter']       = <%= node['observium']['alert']['ena
 
 // set up alerts
 
-$config['alerts']['email']['default']      = "<%= node['observium']['alert']['email'] %>";    ## Default alert recipient
-$config['alerts']['email']['default_only'] = <%= node['observium']['alert']['default_only'] %>;   ## Only use default recipient
-$config['alerts']['email']['enable']       = <%= node['observium']['alert']['email_enable'] %>;    ## Disable email alerts as we do not use observium for monitoring but only for metering
+$config['email']['default']      = "<%= node['observium']['alert']['email'] %>";    ## Default alert recipient
+$config['email']['default_only'] = <%= node['observium']['alert']['default_only'] %>;   ## Only use default recipient
+$config['email']['enable']       = <%= node['observium']['alert']['email_enable'] %>;    ## Disable email alerts as we do not use observium for monitoring but only for metering
 $config['uptime_warning']                  = "<%= node['observium']['alert']['uptime_warning'] %>"; ## Time in seconds to display a "Device Rebooted" warning, defualts to 1 day. Set to 0 to disable warnings.
 $config['alerts']['port']['ifdown']        = <%= node['observium']['alert']['port_status'] %>; ## Generate an alert for ports which enter the ifdown state.
 
