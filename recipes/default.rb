@@ -85,7 +85,7 @@ ark 'observium' do
   path '/opt'
   home_dir node['observium']['install_dir']
   owner node['apache']['user']
-  action :install
+  action :put
 end
 
 template "#{node['observium']['install_dir']}/config.php" do
