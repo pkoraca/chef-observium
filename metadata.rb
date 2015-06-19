@@ -10,7 +10,7 @@ version '0.1.6'
   depends pkg
 end
 
-depends 'mysql', '~> 5'
+depends 'mysql', '~> 5.0'
 
 %w(redhat centos ubuntu debian).each do |os|
   supports os
