@@ -149,22 +149,21 @@ end
 cron_d 'discovery-all' do
   minute '33'
   hour '*/6'
-  command "#{node['observium']['install_dir']}/discovery.php -h all >> /dev/nul
-                   2>&1"
+  command "#{node['observium']['install_dir']}/discovery.php -h all \
+>> /dev/null 2>&1"
   user 'root'
 end
 
 cron_d 'discovery-new' do
   minute '*/5'
-  command "#{node['observium']['install_dir']}/discovery.php -h new >> /dev/null
-                   2>&1"
+  command "#{node['observium']['install_dir']}/discovery.php -h new \
+>> /dev/null 2>&1"
   user 'root'
 end
 
 cron_d 'poller-wrapper' do
   minute '*/5'
-  command "#{node['observium']['install_dir']}/poller-wrapper.py #
-                   {node['observium']['config']['poller_threads']} >> /dev/null
-                   2>&1"
+  command "#{node['observium']['install_dir']}/poller-wrapper.py \
+#{node['observium']['config']['poller_threads']} >> /dev/null 2>&1"
   user 'root'
 end
